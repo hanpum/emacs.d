@@ -2,3 +2,8 @@
 data/org-html-themes
 elpa
 gtd
+.emacs.desktop*
+.session
+auto-save-list/
+bookmarks
+ede-projects.el

@@ -86,20 +86,23 @@
   :after org
   :config
   (message "load org-ref")
+  (let* ((paperDir (concat emacsroot "/data/papers")))
+    (setq bibtex-completion-notes-path (concat paperDir "/notes")
+	  bibtex-completion-library-path (concat paperDir "/pdfs")
+
+	  org-ref-pdf-directory (concat paperDir "/pdfs")
+	  org-ref-notes-directory (concat paperDir "/notes")
+	  org-ref-default-bibliography (directory-files (concat paperDir "/bibs") t "[-a-zA-Z0-9]*\.bib")
+
+	  bibtex-completion-notes-template-multiple-files (with-temp-buffer
+							    (insert-file-contents (concat paperDir "/notes/template.org"))
+							    (buffer-string))))
+
   (setq bibtex-completion-pdf-field "file"
-	bibtex-completion-notes-path (concat emacsroot "/data/paper/notes")
-	bibtex-completion-library-path (concat emacsroot "/data/paper/pdfs")
 	bibtex-completion-display-formats '((t . "${author:20} ${year:4} ${keywords:20} ${title:*} ${=has-pdf=:1} ${=has-note=:1} "))
 	bibtex-completion-additional-search-fields '("keywords" "tags")
 	bibtex-completion-pdf-symbol "P"
 	bibtex-completion-notes-symbol "N"
-
-	org-ref-pdf-directory (concat emacsroot "/data/paper/pdfs")
-	org-ref-notes-directory (concat emacsroot "/data/paper/notes")
-	org-ref-default-bibliography (directory-files (concat emacsroot "/data/paper/bibs") t "[-a-zA-Z0-9]*\.bib")
-
-	bibtex-completion-notes-template-multiple-files
-	"#+TITLE: Notes on: ${author-or-editor} (${year}): ${title}\n\n* CONTRIBUTIONS\n\n* DETAILS\n"
 
 	org-ref-notes-function (lambda (key)
 				 (let* ((bibtex-completion-bibliography (org-ref-find-bibliography)))
