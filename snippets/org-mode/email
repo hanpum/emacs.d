@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: email 
+# key: #+E
+# --
+
+#+EMAIL: $0

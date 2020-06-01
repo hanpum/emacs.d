@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: equal-star
+# key: beqs 
+# --
+
+\begin{equation*}
+$0
+\end{equation*}

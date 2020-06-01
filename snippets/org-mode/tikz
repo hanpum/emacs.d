@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: tikz
+# key: <t
+# --
+
+#+NAME: ${1:name}
+#+HEADER: :headers '("\\\\usepackage{tikz}" "\\\\usepackage{xeCJK}" "\\\\usetikzlibrary{arrows.meta}" "\\\\usetikzlibrary{positioning}")
+#+HEADER: :imagemagick yes
+#+HEADER: :iminoptions -density 600 :imoutoptions -geometry 800 -quality 100
+#+BEGIN_SRC latex :fit yes :results file link slient :file-ext png :output-dir ${2:images} :exports none
+\begin{tikzpicture}
+	[auto, >=Stealth, inner sep=0cm, scale=2.0,
+	arrow/.style={->,gray!64}
+	]
+
+	% axis grid
+	\draw[step=0.5cm,color=gray!20,dashed] (-4,-2) grid (4,2);
+	\draw [->,red!20] (-4,0) -- (4,0);
+	\draw [->,red!20] (0,-2) -- (0,2);
+
+	\foreach \x in {-4,...,4} {
+	  \node[below=2pt,gray!30] at (\x, 0) {\tiny $\x$};
+	}
+	\foreach \x in {-2,-1,1,2} {
+	  \node[right=2pt] at (0, \x) {\tiny $\x$};
+	}
+
+	$0
+\end{tikzpicture}
+#+END_SRC
+

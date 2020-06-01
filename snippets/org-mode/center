@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: center
+# key: <ce
+# --
+
+#+BEGIN_CENTER
+$0
+#+END_CENTER

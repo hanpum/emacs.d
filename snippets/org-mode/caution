@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: caution
+# key: <ca
+# --
+
+#+BEGIN_CAUTION
+$0
+#+END_CAUTION

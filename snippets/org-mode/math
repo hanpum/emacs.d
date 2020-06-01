@@ -1,0 +1,8 @@
+# -*- mode: org -*-
+# name: math
+# key: <math
+# --
+
+\begin{equation*}
+$0
+\end{equation*}
