@@ -9,9 +9,14 @@
 			 ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 (package-initialize)
+(require 'use-package)
+(setq use-package-verbose t
+      use-package-always-defer t)
+
 
 ;; setup customize init scripts path 
 (add-to-list 'load-path (expand-file-name "lisp" emacsroot))
+
 
 (require 'init-misc)
 
@@ -23,12 +28,7 @@
 
 (require 'init-tex)
 
-(require 'init-javascript)
-
 (fa-config-default)
-
-;; only used in c/c++ project
-;; (projectile-global-mode)
 
 (setq conda-anaconda-home "/Users/wxm71/Applications/anaconda3")
 (setq conda-env-home-directory "/Users/wxm71/Applications/anaconda3/envs")
@@ -40,7 +40,7 @@
 					 (format "%.2fseconds" (float-time (time-subtract after-init-time before-init-time)))
 					 gcs-done)))
 
-(setq gc-cons-threshold (* 20 1000 1000))
+(setq g-cons-threshold (* 20 1000 1000))
 
 
 (custom-set-faces
@@ -57,9 +57,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(electric-pair-pairs (quote ((34 . 34) (8216 . 8217) (8220 . 8221))))
+ '(org-agenda-files
+   (quote
+    ("~/projects/sds/competive_analysis/competetor.org" "~/.emacs.d/gtd/paper.org")))
  '(package-selected-packages
    (quote
-    (org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
+    (esup org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
  '(safe-local-variable-values
    (quote
     ((checkdoc-minor-mode . t)

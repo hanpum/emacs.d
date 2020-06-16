@@ -84,8 +84,8 @@
 (use-package org-ref
   :ensure t
   :after org
+  :commands org-ref-helm-insert-cite-link
   :config
-  (message "load org-ref")
   (let* ((paperDir (concat emacsroot "/data/papers")))
     (setq bibtex-completion-notes-path (concat paperDir "/notes")
 	  bibtex-completion-library-path (concat paperDir "/pdfs")
@@ -99,7 +99,7 @@
 							    (buffer-string))))
 
   (setq bibtex-completion-pdf-field "file"
-	bibtex-completion-display-formats '((t . "${author:20} ${year:4} ${keywords:20} ${title:*} ${=has-pdf=:1} ${=has-note=:1} "))
+	bibtex-completion-display-formats '((t . "${author:15}  ${year:4}  ${keywords:20}  ${title:*} ${=has-pdf=:1} ${=has-note=:1} "))
 	bibtex-completion-additional-search-fields '("keywords" "tags")
 	bibtex-completion-pdf-symbol "P"
 	bibtex-completion-notes-symbol "N"

@@ -1,8 +1,7 @@
 (defun my/run-current-buffer ()
   "save current buffer and run it(for examples, python/shell scripts)"
   (interactive)
-  (let*
-      ((outputBuf "run-output"))
+  (let* ((outputBuf "run-output"))
 
     ;; save file if necessary
     (if (or
@@ -34,6 +33,7 @@
 ;; load shell enviroment variable
 (use-package exec-path-from-shell
   :config
+  (setq exec-path-from-shell-check-startup-files nil)
   (if (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
 
@@ -98,10 +98,10 @@
 
 
 (use-package sr-speedbar
+  :bind ("C-c n" . sr-speedbar-toggle)
   :config
   (setq speedbar-show-unknown-files t
-	c-basic-offset 4)
-  (global-set-key (kbd "C-c n") 'sr-speedbar-toggle))
+	c-basic-offset 4))
 
 
 ;; setup for session
@@ -137,24 +137,37 @@
   :config
   (yas-global-mode 1))
 
+
 (use-package hexo
-  :ensure t)
+  :ensure t
+  :init
+  (add-hook 'hexo-mode-hook (lambda nil (evil-local-mode))))
 
 
 (use-package google-translate
-  :config 
-  (use-package google-translate-default-ui)
-  (global-set-key "\C-ct" 'google-translate-at-point)
-  (global-set-key "\C-cT" 'google-translate-query-translate)
+  :ensure t
+  :init 
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "zh-CN"
 	google-translate-output-destination nil
-	google-translate-show-phonetic t))
+	google-translate-show-phonetic t)
+  :bind (("C-c t" . google-translate-at-point)
+	 ("C-c T" . google-translate-query-translate))
+  :config 
+  (use-package google-translate-default-ui))
 
-(use-package markdown-mode
-  :config
-  )
+
+(use-package srefactor
+  :commands srefactor-refactor-at-point
+  :bind (:map c-mode-map
+	      ("M-RET" . srefactor-refactor-at-point)
+	      :map c++-mode-map
+	      ("M-RET" . srefactor-refactor-at-point)))
+
+
+(use-package markdown-mode)
+
+
 (setq server-socket-dir (concat emacsroot "/server/"))
-
 
 (provide 'init-misc)

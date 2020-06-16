@@ -1,6 +1,6 @@
 ;; enable company-mode default
 (use-package company
-  :init (global-company-mode 1)
+  ;;:init (global-company-mode 1)
   :bind (:map company-active-map
 	      ("C-n" . company-select-next-or-abort)
 	      ("C-p" . company-select-previous-or-abort)
@@ -47,13 +47,11 @@
 				(add-hook 'completion-at-point-functions 'my-plantuml-completion-at-point)))
 
 
-(use-package ede
-  :init
-  (global-ede-mode)
-  :commands global-ede-mode
-  :hook ((c-mode c++-mode) . ede-minor-mode))
-
-
+;;(use-package ede
+;;  :init
+;;  (global-ede-mode)
+;;  :commands global-ede-mode
+;;  :hook ((c-mode c++-mode) . ede-minor-mode))
 ;;(add-hook 'speedbar-load-hook (lambda () (require 'semantic/sb)))
 
 ;; (require 'cc-mode)
@@ -70,15 +68,10 @@
 ;; 					    global-semantic-show-parser-state-mode
 ;; 					    global-semantic-show-unmatched-syntax-mode))))
 ;; (global-semantic-idle-summary-mode 1)
-;; (semantic-mode 1)
 
-
-(use-package srefactor
-  :commands srefactor-refactor-at-point
-  :bind (:map c-mode-map
-	      ("M-RET" . srefactor-refactor-at-point)
-	      :map c++-mode-map
-	      ("M-RET" . srefactor-refactor-at-point)))
+;; disable semantic
+(semantic-mode -1)
+(setq semantic-default-submodes nil)
 
 
 ;; configuration for python
@@ -91,7 +84,9 @@
   (add-to-list 'company-backends 'company-jedi))
 
 
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook '(lambda nil
+			      (progn
+				(global-company-mode))))
 
 (add-hook 'scheme-mode
 	  (lambda ()
