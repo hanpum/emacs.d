@@ -4,15 +4,17 @@
 
 (setq emacsroot "~/.emacs.d")
 
-(setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-			 ("melpa" . "http://elpa.zilongshanren.com/melpa/")
-			 ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
+			 ("org" . "https://elpa.emacs-china.org/org/")))
 
 (package-initialize)
 (require 'use-package)
 (setq use-package-verbose t
+      use-package-always-ensure t
       use-package-always-defer t)
 
+(setq package-check-signature nil)
 
 ;; setup customize init scripts path 
 (add-to-list 'load-path (expand-file-name "lisp" emacsroot))
@@ -27,8 +29,6 @@
 (require 'init-company)
 
 (require 'init-tex)
-
-(fa-config-default)
 
 (setq conda-anaconda-home "/Users/wxm71/Applications/anaconda3")
 (setq conda-env-home-directory "/Users/wxm71/Applications/anaconda3/envs")

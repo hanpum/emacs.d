@@ -62,7 +62,10 @@
 (setq select-enable-clipboard t)
 
 ;; render color value
-(rainbow-mode t)
+(use-package rainbow-mode
+  :ensure t
+  :init
+  (rainbow-mode t))
 
 
 (set-face-attribute 'default nil :height 140 :family "Monospace")
