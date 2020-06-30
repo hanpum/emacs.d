@@ -84,20 +84,7 @@
 (use-package org-ref
   :ensure t
   :after org
-  :commands org-ref-helm-insert-cite-link
-  :config
-  (let* ((paperDir (concat emacsroot "/data/papers")))
-    (setq bibtex-completion-notes-path (concat paperDir "/notes")
-	  bibtex-completion-library-path (concat paperDir "/pdfs")
-
-	  org-ref-pdf-directory (concat paperDir "/pdfs")
-	  org-ref-notes-directory (concat paperDir "/notes")
-	  org-ref-default-bibliography (directory-files (concat paperDir "/bibs") t "[-a-zA-Z0-9]*\.bib")
-
-	  bibtex-completion-notes-template-multiple-files (with-temp-buffer
-							    (insert-file-contents (concat paperDir "/notes/template.org"))
-							    (buffer-string))))
-
+  :init
   (setq bibtex-completion-pdf-field "file"
 	bibtex-completion-display-formats '((t . "${author:15}  ${year:4}  ${keywords:20}  ${title:*} ${=has-pdf=:1} ${=has-note=:1} "))
 	bibtex-completion-additional-search-fields '("keywords" "tags")
@@ -117,9 +104,23 @@
 	bibtex-autokey-titlewords 2
 	bibtex-autokey-titleword-length 5
 	bibtex-autokey-titlewords-stretch 1)
+  :commands org-ref-helm-insert-cite-link
+  :config
+  (let* ((paperDir (concat emacsroot "/data/papers")))
+    (setq bibtex-completion-notes-path (concat paperDir "/notes")
+	  bibtex-completion-library-path (concat paperDir "/pdfs")
+
+	  org-ref-pdf-directory (concat paperDir "/pdfs")
+	  org-ref-notes-directory (concat paperDir "/notes")
+	  org-ref-default-bibliography (directory-files (concat paperDir "/bibs") t "[-a-zA-Z0-9]*\.bib")
+
+	  bibtex-completion-notes-template-multiple-files (with-temp-buffer
+							    (insert-file-contents (concat paperDir "/notes/template.org"))
+							    (buffer-string))))
   ;; (use-package org-ref-citeproc)
   ;; (setq org-export-before-parsing-hook '(orcp-citeproc))
   )
 
+(add-to-list 'bibtex-mode-hook '(lambda nil (require 'org-ref)))
 
 (provide 'init-org)

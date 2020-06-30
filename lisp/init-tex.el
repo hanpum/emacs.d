@@ -1,9 +1,10 @@
 (use-package tex-mode
+  :demand t
+  :hook (after-init . (lambda nil
+			(setenv "PATH"
+				(concat "/Library/TeX/texbin" ":" (getenv "PATH")))))
   :hook (LaTeX-mode . (lambda nil
 			(progn
-			  (setenv "PATH"
-				  (concat "/Library/TeX/texbin" ":"
-					  (getenv "PATH")))
 			  (setq-default
 			   TeX-engine 'xetex
 			   TeX-PDF-mode t)

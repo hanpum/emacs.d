@@ -32,6 +32,7 @@
 
 ;; load shell enviroment variable
 (use-package exec-path-from-shell
+  :demand t
   :config
   (setq exec-path-from-shell-check-startup-files nil)
   (if (memq window-system '(mac ns x))
@@ -78,9 +79,10 @@
 ;; enable highlight-parentheses
 (use-package highlight-parentheses
   :ensure t
-  :config
+  :init
   (electric-pair-mode t)
   (global-highlight-parentheses-mode t))
+
 
 
 ;; enable evil model default
@@ -134,14 +136,13 @@
 
 (use-package yasnippet
   :ensure t
-  :config
-  (yas-global-mode 1))
+  :init (yas-global-mode 1))
 
 
 (use-package hexo
   :ensure t
   :init
-  (add-hook 'hexo-mode-hook (lambda nil (evil-local-mode))))
+  (add-hook 'hexo-mode-hook 'evil-local-mode))
 
 
 (use-package google-translate
@@ -164,10 +165,10 @@
 	      :map c++-mode-map
 	      ("M-RET" . srefactor-refactor-at-point)))
 
-
 (use-package markdown-mode)
 
-
 (setq server-socket-dir (concat emacsroot "/server/"))
+
+(add-to-list 'auto-mode-alist '("\\.pb\\'" . protobuf-mode))
 
 (provide 'init-misc)

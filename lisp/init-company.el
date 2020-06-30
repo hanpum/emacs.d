@@ -76,6 +76,7 @@
 
 ;; configuration for python
 (use-package python
+  :after company
   :bind (:map python-mode-map
 	      ([f5] . 'my/run-current-buffer))
   :config

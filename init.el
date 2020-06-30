@@ -11,7 +11,7 @@
 (package-initialize)
 (require 'use-package)
 (setq use-package-verbose t
-      use-package-always-defer t)
+      use-package-always-defer nil)
 
 
 ;; setup customize init scripts path 
@@ -30,8 +30,8 @@
 
 (fa-config-default)
 
-(setq conda-anaconda-home "/Users/wxm71/Applications/anaconda3")
-(setq conda-env-home-directory "/Users/wxm71/Applications/anaconda3/envs")
+(setq conda-anaconda-home "~/Applications/anaconda3")
+(setq conda-env-home-directory "~/Applications/anaconda3/envs")
 
 
 ;; start up time profile
@@ -50,6 +50,7 @@
  ;; If there is more than one, they won't work right.
  )
 
+
 (put 'narrow-to-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -62,13 +63,10 @@
     ("~/projects/sds/competive_analysis/competetor.org" "~/.emacs.d/gtd/paper.org")))
  '(package-selected-packages
    (quote
-    (esup org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
+    (bazel-mode protobuf-mode esup org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
  '(safe-local-variable-values
    (quote
-    ((checkdoc-minor-mode . t)
-     (org-image-actual-width . 200px)
-     (org-image-actual-width . 100px)
+    ((org-image-actual-width . 200px)
      (org-confirm-babel-evaluate)
-     (bibtex-completion-bibliography . "cs224n.bib")
      (hexo-new-format . org))))
  '(session-use-package t nil (session)))
