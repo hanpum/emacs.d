@@ -6,14 +6,12 @@
 	 ("M-x" . helm-M-x)
 	 ("M-y" . helm-show-kill-ring)
 	 ("C-x C-f" . helm-find-files)
-
-	 ;; setup c-header search path
 	 :map helm-map
 	 ([tab] . helm-execute-persistent-action)
 	 ("C-i" . helm-execute-persistent-action)
 	 ("C-z" . helm-select-action))
   :config
-  (use-package helm-config)
+  ;; (use-package helm-config)
   (helm-autoresize-mode 1)
   (setq helm-scroll-amount 8
 	helm-M-x-fuzzy-match t
