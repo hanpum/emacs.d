@@ -2,49 +2,21 @@
 (use-package company
   ;;:init (global-company-mode 1)
   :bind (:map company-active-map
+	      ("M-n" . nil)
+	      ("M-p" . nil)
 	      ("C-n" . company-select-next-or-abort)
 	      ("C-p" . company-select-previous-or-abort)
 	      ("C-c [?\t]" . helm-company)
 	      :map company-mode-map
 	      ("C-c [?\t]" . helm-company))
   :config
-  (setq company-idle-delay 0.1
-	company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.05
+	company-minimum-prefix-length 2
+	company-selection-wrap-around t
+	company-tooltip-align-annotations t
+	company-transformers '(company-sort-by-occurrence))
   (setq company-backends (delete 'company-semantic company-backends)))
 
-
-(use-package company-c-headers
-  :commands company-c-headers
-  :config
-  (add-to-list 'company-c-headers-path-system "/usr/local/include/c++/5.5.0/"))
-
-
-(defun my:setupCMode nil
-  "do configuration for c/c++ mode"
-  (progn
-    (add-to-list 'company-backends 'company-c-headers)))
-
-(add-hook 'c-mode-hook 'my:setupCMode nil t)
-(add-hook 'c++-mode-hook 'my:setupCMode nil t)
-(add-hook 'cmake-mode-hook (lambda ()
-			     (add-to-list 'company-backends 'company-cmake)))
-
-
-;; todo remove this to plantuml config section
-(defun my-plantuml-completion-at-point ()
-  "Function used for `completion-at-point-functions' in `plantuml-mode'."
-  (let ((completion-ignore-case t)
-	(bounds (bounds-of-thing-at-point 'symbol))
-	(keywords plantuml-kwdList))
-    (when (and bounds keywords)
-      (list (car bounds)
-	    (cdr bounds)
-	    keywords
-	    :exclusive 'no
-	    :company-docsig #'identity))))
-
-(add-hook 'plantuml-mode-hook (lambda()
-				(add-hook 'completion-at-point-functions 'my-plantuml-completion-at-point)))
 
 
 ;;(use-package ede
@@ -74,24 +46,7 @@
 (setq semantic-default-submodes nil)
 
 
-;; configuration for python
-(use-package python
-  :after company
-  :bind (:map python-mode-map
-	      ([f5] . 'my/run-current-buffer))
-  :config
-  (jedi:setup)
-  (setq python-shell-interpreter "python3")
-  (add-to-list 'company-backends 'company-jedi))
-
-
 (add-hook 'after-init-hook '(lambda nil
 			      (progn
 				(global-company-mode))))
-
-(add-hook 'scheme-mode
-	  (lambda ()
-	    (setq company-backends
-		  (delete 'geiser-company-backend company-backends))))
-
 (provide 'init-company)

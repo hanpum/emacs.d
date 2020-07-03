@@ -30,6 +30,11 @@
 
 (require 'init-tex)
 
+(require 'init-python)
+(require 'init-cpp)
+(require 'init-lisp)
+
+
 
 ;; start up time profile
 (add-hook 'emacs-startup-hook (lambda ()
@@ -40,14 +45,6 @@
 (setq g-cons-threshold (* 20 1000 1000))
 
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-(put 'narrow-to-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -61,3 +58,9 @@
    (quote
     (bazel-mode protobuf-mode org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
  '(session-use-package t nil (session)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

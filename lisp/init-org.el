@@ -121,6 +121,23 @@
   ;; (setq org-export-before-parsing-hook '(orcp-citeproc))
   )
 
-(add-to-list 'bibtex-mode-hook '(lambda nil (require 'org-ref)))
+;; (add-to-list 'bibtex-mode-hook '(lambda nil (require 'org-ref)))
+
+;; todo remove this to plantuml config section
+(defun my-plantuml-completion-at-point ()
+  "Function used for `completion-at-point-functions' in `plantuml-mode'."
+  (let ((completion-ignore-case t)
+	(bounds (bounds-of-thing-at-point 'symbol))
+	(keywords plantuml-kwdList))
+    (when (and bounds keywords)
+      (list (car bounds)
+	    (cdr bounds)
+	    keywords
+	    :exclusive 'no
+	    :company-docsig #'identity))))
+
+(add-hook 'plantuml-mode-hook (lambda()
+				(add-hook 'completion-at-point-functions 'my-plantuml-completion-at-point)))
+
 
 (provide 'init-org)

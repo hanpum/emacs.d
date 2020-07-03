@@ -2,7 +2,7 @@
   :init
   (helm-mode 1)
   (global-unset-key (kbd "C-x c"))
-  :bind (("C-C h" . helm-command-prefix)
+  :bind (("C-c h" . helm-command-prefix)
 	 ("M-x" . helm-M-x)
 	 ("M-y" . helm-show-kill-ring)
 	 ("C-x C-f" . helm-find-files)

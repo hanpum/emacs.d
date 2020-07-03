@@ -48,6 +48,7 @@
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-A-r") 'isearch-backward)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-x C-b") 'switch-to-buffer)
 
 
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t) 
@@ -170,8 +171,21 @@
 
 (use-package markdown-mode)
 
+(use-package flycheck)
+
+(use-package hl-line-mode
+  :ensure nil
+  :init
+  (global-hl-line-mode)
+  ;;(set-face-background hl-line-face "gray13")
+  )
+
+(use-package protobuf-mode
+  :mode "\\.pb\\'")
+
 (setq server-socket-dir (concat emacsroot "/server/"))
 
-(add-to-list 'auto-mode-alist '("\\.pb\\'" . protobuf-mode))
+(xterm-mouse-mode)
+
 
 (provide 'init-misc)
