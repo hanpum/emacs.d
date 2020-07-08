@@ -6,6 +6,8 @@
 	 ("M-x" . helm-M-x)
 	 ("M-y" . helm-show-kill-ring)
 	 ("C-x C-f" . helm-find-files)
+	 ("C-c C-j" . helm-semantic-or-imenu) 
+	 ("C-c C-o" . helm-occur)
 	 :map helm-map
 	 ([tab] . helm-execute-persistent-action)
 	 ("C-i" . helm-execute-persistent-action)

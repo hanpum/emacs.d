@@ -139,18 +139,17 @@
 
 
 (use-package yasnippet
-  :ensure t
   :init (yas-global-mode 1))
 
 
 (use-package hexo
-  :ensure t
   :init
   (add-hook 'hexo-mode-hook 'evil-local-mode))
 
+(use-package bazel-mode)
+
 
 (use-package google-translate
-  :ensure t
   :init 
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "zh-CN"
@@ -183,6 +182,7 @@
 (use-package protobuf-mode
   :mode "\\.pb\\'")
 
+(prefer-coding-system 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
 
 (xterm-mouse-mode)

@@ -3,8 +3,8 @@
   :config
   (setq
    jedi:use-shortcuts t
-   jedi:complete-on-dot t)
-  )
+   jedi:complete-on-dot t
+   jedi:imenu-create-index-function 'jedi:create-flat-imenu-index))
 
 ;; configuration for python
 (use-package python
@@ -13,7 +13,12 @@
 	      ([f5] . 'my/run-current-buffer)
 	      ("C-c ]" . 'jedi:goto-definition)
 	      ("C-c h i" . 'jedi:show-doc))
-  :hook (python-mode . flycheck-mode)
+  :hook (python-mode .
+		     (lambda nil
+		       (progn
+			 (flycheck-mode)
+			 (setq-local
+			  imenu-create-index-function #'python-imenu-create-flat-index))))
   :config
   (jedi:setup)
   (setq python-shell-interpreter "python3")
