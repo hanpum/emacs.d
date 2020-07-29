@@ -182,6 +182,13 @@
 (use-package protobuf-mode
   :mode "\\.pb\\'")
 
+(use-package man
+  :hook (Man-mode . (lambda nil
+		      (progn
+			(set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
+			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")
+			))))
+
 (prefer-coding-system 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
 
