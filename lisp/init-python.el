@@ -11,8 +11,9 @@
   :after company
   :bind (:map python-mode-map
 	      ([f5] . 'my/run-current-buffer)
-	      ("C-c ]" . 'jedi:goto-definition)
-	      ("C-c h i" . 'jedi:show-doc))
+	      ("C-c ." . 'jedi:goto-definition)
+	      ("C-c C-c" . 'comment-region)
+	      ("C-c h m" . 'jedi:show-doc))
   :hook (python-mode .
 		     (lambda nil
 		       (progn

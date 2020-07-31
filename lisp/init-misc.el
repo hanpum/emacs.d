@@ -170,6 +170,9 @@
 
 (use-package markdown-mode)
 
+(add-to-list 'auto-mode-alist
+	     '("\\.grm\\'" . conf-mode))
+
 (use-package flycheck)
 
 (use-package hl-line-mode

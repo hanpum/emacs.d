@@ -11,7 +11,7 @@
 	      ("C-c [?\t]" . helm-company))
   :config
   (setq company-idle-delay 0.05
-	company-minimum-prefix-length 2
+	company-minimum-prefix-length 1
 	company-selection-wrap-around t
 	company-tooltip-align-annotations t
 	company-transformers '(company-sort-by-occurrence))
