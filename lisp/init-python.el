@@ -18,11 +18,11 @@
 		     (lambda nil
 		       (progn
 			 (flycheck-mode)
+			 (add-to-list 'company-backends 'company-jedi)
 			 (setq-local
 			  imenu-create-index-function #'python-imenu-create-flat-index))))
   :config
   (jedi:setup)
-  (setq python-shell-interpreter "python3")
-  (add-to-list 'company-backends 'company-jedi))
+  (setq python-shell-interpreter "python3"))
 
 (provide 'init-python)
