@@ -70,10 +70,14 @@
   (require 'flycheck-rtags))
 
 
+(use-package helm-rtags)
+
+
 (use-package company-rtags
   :after company rtags
   :config
   (add-to-list 'company-backends 'company-rtags))
+
 
 (use-package flycheck-rtags
   :after flycheck rtags

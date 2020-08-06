@@ -6,6 +6,7 @@
 (use-package org
   :config
   (auto-fill-mode t)
+  (require 'org-ref)
   (define-key org-mode-map (kbd "C-c C-c") (lambda ()
 					     (interactive)
 					     (org-ctrl-c-ctrl-c)
@@ -43,17 +44,28 @@
 	  ("r" "Reading"  entry (file+headline "" "Reading") "* TODO %? %t\n %i\n %a")
 	  ("p" "Paper"    entry (file+headline "" "Papers")  "* TODO %? %t\n %i\n %a")
 	  ("c" "Calendar" entry (file+headline "" "Calendars") "* TODO %? %t\n %i\n %a"))
-	
+
+	org-refile-targets '( (nil :level . 1)))
+
+
+  (mapcar
+   (lambda (item)
+     (setq-local npath (concat orgroot item))
+     (message npath)
+     ;;(add-to-list 'org-refile-targets '(npath :level . 1))
+     )
+   '("/inbox.org" "/arch/2020/7.org" "/cancel.org"))
+
 	;; refine
-	org-refile-targets '(
-			     ( nil :level . 1)
-			     ( (expand-file-name "/arch/202/4.org" orgroot) :level . 1)
-			     ( (concat orgroot "/inbox.org") :level . 1)
-			     ( (concat orgroot "/cancel.org") :level . 1)
-			     ( (concat orgroot "/note.org") :maxlevel . 1)
-			     ( (concat orgroot "/canceled.org") :maxlevel . 1)
-			     ( (concat orgroot "/paper.org") :maxlevel . 1)
-			     ( (concat orgroot "/finished.org") :maxlevel . 1)))
+	;; org-refile-targets '(
+	;; 		     ( nil :level . 1)
+	;; 		     ( (concat orgroot "/inbox.org") :level . 1)
+	;; 		     ( (concat orgroot "/arch/2020/4.org") :level . 1)
+	;; 		     ( (concat orgroot "/cancel.org") :level . 1)
+	;; 		     ( (concat orgroot "/note.org") :maxlevel . 1)
+	;; 		     ( (concat orgroot "/canceled.org") :maxlevel . 1)
+	;; 		     ( (concat orgroot "/paper.org") :maxlevel . 1)
+	;; 		     ( (concat orgroot "/finished.org") :maxlevel . 1)))
 
 
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -83,7 +95,6 @@
 
 (use-package org-ref
   :ensure t
-  :after org
   :init
   (setq bibtex-completion-pdf-field "file"
 	bibtex-completion-display-formats '((t . "${author:15}  ${year:4}  ${keywords:20}  ${title:*} ${=has-pdf=:1} ${=has-note=:1} "))
@@ -110,6 +121,7 @@
     (setq bibtex-completion-notes-path (concat paperDir "/notes")
 	  bibtex-completion-library-path (concat paperDir "/pdfs")
 
+	  org-ref-open-pdf-function 'org-ref-open-bibtex-pdf
 	  org-ref-pdf-directory (concat paperDir "/pdfs")
 	  org-ref-notes-directory (concat paperDir "/notes")
 	  org-ref-default-bibliography (directory-files (concat paperDir "/bibs") t "[-a-zA-Z0-9]*\.bib")
