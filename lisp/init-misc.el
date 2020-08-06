@@ -173,7 +173,9 @@
 (add-to-list 'auto-mode-alist
 	     '("\\.grm\\'" . conf-mode))
 
-(use-package flycheck)
+(use-package flycheck
+  :config
+  (setq flycheck-display-errors-delay 0.1))
 
 (use-package hl-line-mode
   :ensure nil
