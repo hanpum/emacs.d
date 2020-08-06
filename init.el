@@ -8,12 +8,13 @@
 			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
 			 ("org" . "https://elpa.emacs-china.org/org/")))
 
+
 (package-initialize)
+
 (require 'use-package)
 (setq use-package-verbose t
       use-package-always-defer t
       use-package-always-ensure t)
-
 (setq package-check-signature nil)
 
 ;; setup customize init scripts path 
@@ -53,7 +54,10 @@
  '(electric-pair-pairs (quote ((34 . 34) (8216 . 8217) (8220 . 8221))))
  '(package-selected-packages
    (quote
-    (cmake-ide company-rtags flycheck-rtags helm-rtags rtags bazel-mode protobuf-mode org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
+    (projectile cmake-ide company-rtags flycheck-rtags helm-rtags rtags bazel-mode protobuf-mode org-ref markdown-mode markdown-mode+ markdown-preview-mode markdown-toc google-translate org-plus-contrib tide js2-refactor js2-mode yaml-mode yasnippet-snippets use-package srefactor sr-speedbar session rainbow-mode projectile-codesearch org-make-toc latex-math-preview json-mode highlight-parentheses highlight-doxygen helm-projectile helm-mt helm-gtags helm-flycheck helm-company graphviz-dot-mode geiser function-args flycheck-plantuml exec-path-from-shell evil conda company-tabnine company-shell company-reftex company-math company-jedi company-c-headers cmake-font-lock cdlatex bison-mode auctex)))
+ '(safe-local-variable-values
+   (quote
+    ((company-clang-arguments "-I/data/hanpu.mwx/ant1" "-I/data/hanpu.mwx/ant1/third_party"))))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

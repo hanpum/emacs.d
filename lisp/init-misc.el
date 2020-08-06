@@ -182,12 +182,29 @@
 (use-package protobuf-mode
   :mode "\\.pb\\'")
 
+
+(use-package projectile
+  :commands projectile-global-mode
+  :init (projectile-global-mode)
+  :bind (:map projectile-mode-map
+	      ("C-c p" . 'projectile-command-map))
+  :config
+  (require 'helm-projectile)
+  (setq projectile-globally-ignored-file-suffixes '(".bz2" ".log" ".rpm"))
+  (setq projectile-completion-system 'helm))
+
+
+(use-package helm-projectile
+  :after projectile helm
+  :config
+  (helm-projectile-on))
+
+
 (use-package man
   :hook (Man-mode . (lambda nil
 		      (progn
 			(set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
-			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")
-			))))
+			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")))))
 
 (prefer-coding-system 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
