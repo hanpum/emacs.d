@@ -22,6 +22,7 @@
 
 	org-ditaa-jar-path (expand-file-name "ditaa0_9.jar" "~/Applications/lib")
 	org-plantuml-jar-path (expand-file-name "plantuml.jar" "~/Applications/lib")
+	plantuml-default-exec-mode 'jar
 
 	org-latex-compiler "xelatex"
 	org-export-async-debug nil
