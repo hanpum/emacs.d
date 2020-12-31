@@ -202,6 +202,8 @@
 (use-package helm-projectile
   :after projectile helm
   :config
+  (setq grep-find-ignored-directories
+	(append grep-find-ignored-directories '("bazel-ant1" "bazel-bin" "bazel-out" "bazel-testlogs")))
   (helm-projectile-on))
 
 
