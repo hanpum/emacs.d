@@ -7,6 +7,7 @@
   :config
   (auto-fill-mode t)
   (require 'org-ref)
+  (add-to-list 'org-export-backends 'md)
   (define-key org-mode-map (kbd "C-c C-c") (lambda ()
 					     (interactive)
 					     (org-ctrl-c-ctrl-c)
@@ -20,8 +21,9 @@
 			       "~/projects/sds/competive_analysis/competetor.org"
 			       (concat orgroot "/paper.org"))
 
-	org-ditaa-jar-path (expand-file-name "ditaa0_9.jar" "~/Applications/lib")
-	org-plantuml-jar-path (expand-file-name "plantuml.jar" "~/Applications/lib")
+	org-ditaa-jar-path (expand-file-name "ditaa0_9.jar" "~/.local/lib")
+	plantuml-jar-path (expand-file-name "plantuml.jar" "~/.local/lib")
+	org-plantuml-jar-path (expand-file-name "plantuml.jar" "~/.local/lib")
 	plantuml-default-exec-mode 'jar
 
 	org-latex-compiler "xelatex"
