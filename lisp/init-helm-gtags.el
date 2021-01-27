@@ -17,6 +17,9 @@
   (helm-autoresize-mode 1)
   (setq helm-scroll-amount 8
 	helm-M-x-fuzzy-match t
+	helm-ag-use-agignore t
+	helm-ag-use-grep-ignore-list t
+	helm-ag-insert-at-point 'symbol
 	helm-autoresize-max-height 0
 	helm-autoresize-min-height 20
 	helm-split-window-in-side-p t
@@ -31,69 +34,6 @@
   ;; export MANPATH=`manpath`
   (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
 
-
-;; (use-package helm-gtags
-;;   :hook ((c-mode c++-mode) . helm-gtags-mode)
-;;   :bind (:map helm-gtags-mode-map
-;; 	      ("C-c g a" . helm-gtags-tags-in-this-function)
-;; 	      ("C-j" . helm-gtags-select)
-;; 	      ("C-c r" . helm-gtags-find-rtag)
-;; 	      ("C-c ]" . helm-gtags-find-tag)
-;; 	      ("C-c }" . helm-gtags-find-symbol)
-;; 	      ("C-w ]" . helm-gtags-find-tag-other-window)
-;; 	      ("C-c [" . helm-gtags-pop-stack)
-;; 	      ("C-c <" . helm-gtags-previous-history)
-;; 	      ("C-c >" . helm-gtags-next-history))
-;;   :config
-;;   (setq helm-gtags-ignore-case t
-;; 	helm-gtags-auto-update t
-;; 	helm-gtags-use-input-at-cursor t
-;; 	helm-gtags-pulse-at-cursor t
-;; 	helm-gtags-prefix-key "\C-cg"
-;; 	helm-gtags-suggested-key-mapping t))
-
-(use-package rtags
-  :commands rtags-diagnostics
-  :bind (:map c-mode-base-map
-	      ("C-c j" . 'rtags-imenu)
-	      ("C-c ." . 'rtags-find-symbol-at-point)
-	      ("C-c ," . 'rtags-location-stack-back)
-	      ("C-c r" . 'rtags-find-references-at-point))
-  :config
-  ;;(rtags-enable-standard-keybindings)
-  (setq rtags-use-helm t
-	rtags-display-result-backend 'helm
-	rtags-autostart-diagnostics t
-	rtags-completions-enabled t)
-  (require 'helm-rtags)
-  (require 'company-rtags)
-  (require 'flycheck-rtags))
-
-
-(use-package helm-rtags)
-
-
-(use-package company-rtags
-  :after company rtags
-  :config
-  (add-to-list 'company-backends 'company-rtags))
-
-
-(use-package flycheck-rtags
-  :after flycheck rtags
-  :config 
-  (message "config flycheck-rtags")
-  )
-  
-
-(defun my-flycheck-rtags-setup ()
-  (require 'rtags)
-  (flycheck-select-checker 'rtags)
-  (setq-local flycheck-highlighting-mode nil) 
-  (setq-local flycheck-check-syntax-automatically nil))
-
-(add-hook 'c-mode-hook 'my-flycheck-rtags-setup)
-(add-hook 'c++-mode-hook 'my-flycheck-rtags-setup)
-(add-hook 'objc-mode-hook 'my-flycheck-rtags-setup)
+(use-package helm-ag)
 
 (provide 'init-helm-gtags)
