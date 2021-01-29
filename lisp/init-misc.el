@@ -141,6 +141,8 @@
 (use-package yasnippet
   :init (yas-global-mode 1))
 
+(use-package yasnippet-snippets)
+
 
 (use-package hexo
   :init
@@ -203,7 +205,10 @@
   :after projectile helm
   :config
   (setq grep-find-ignored-directories
-	(append grep-find-ignored-directories '("bazel-ant1" "bazel-bin" "bazel-out" "bazel-testlogs")))
+	(append grep-find-ignored-directories '("bazel-ant1" 
+  "bazel-testlogs" "aliws_updater" "platform_bot_data" "dingding_bot/data" "aliws"
+  "ye_wu_zhi_da/model" "debug_data"))
+	grep-find-ignored-files (append grep-find-ignored-files '("*.db" "*.tar" "*.tgz")))
   (helm-projectile-on))
 
 
@@ -217,6 +222,5 @@
 (setq server-socket-dir (concat emacsroot "/server/"))
 
 (xterm-mouse-mode)
-
 
 (provide 'init-misc)

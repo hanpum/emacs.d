@@ -1,5 +1,4 @@
 (use-package tex-mode
-  :demand t
   :hook (after-init . (lambda nil
 			(setenv "PATH"
 				(concat "/Library/TeX/texbin" ":" (getenv "PATH")))))
