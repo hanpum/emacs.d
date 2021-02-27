@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:var 
+# key:V 
+# --
+(define ${1:name} ${2:body})

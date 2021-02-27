@@ -95,13 +95,12 @@
   :init
   (setq evil-want-C-i-jump nil)     ;; enable tab in org mode
   (evil-mode 1)
-  
-  :config
-  (evil-set-initial-state 'term-mode 'emacs)
-  
   :bind (:map evil-motion-state-map
-	      (":" . helm-M-x)))
-
+	      (":" . helm-M-x))
+  :config
+  ;; or add to evil-emacs-state-modes, and remove from evil-motion-state-modes
+  (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode))
+    (evil-set-initial-state mode 'emacs)))
 
 (use-package sr-speedbar
   :bind ("C-c n" . sr-speedbar-toggle)

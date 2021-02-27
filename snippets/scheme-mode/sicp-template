@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: sicp-template 
+# key: L
+# --
+(load-option 'format)
+(load "utils")
+
+${2:TODO}
+
+(println "~%begin testing of ${1:TODO}"))
