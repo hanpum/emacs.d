@@ -1,3 +1,20 @@
+(defadvice message (before message-with-timestamp activate)
+  "message with timestamp"
+  (if (not (or (< (length (ad-get-args 0)) 1)
+	       (null (ad-get-arg 0))
+	       (string-equal (ad-get-arg 0) "%s")))
+      (let ((deactivate-mar nil))
+	(save-excursion
+	  (set-buffer "*Messages*")
+	  (read-only-mode -1)
+	  (goto-char (point-max))
+	  (if (not (bolp))
+	      (newline))
+	  (insert (format-time-string "[%F %T.%3N] "
+				      (current-time)))
+	  (read-only-mode 1)))))
+
+
 ;; gc config for boost startup
 (setq gc-cons-threshold (* 100 1000 1000))
 
@@ -34,7 +51,7 @@
 (require 'init-misc)
 (require 'init-org)
 
-(require 'init-helm-gtags)
+(require 'init-helm)
 
 (require 'init-company)
 
@@ -52,3 +69,4 @@
 					 gcs-done)))
 
 (setq g-cons-threshold (* 20 1000 1000))
+(put 'narrow-to-page 'disabled nil)

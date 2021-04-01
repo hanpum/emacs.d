@@ -5,6 +5,11 @@
   (add-to-list 'company-backends 'company-cmake))
 
 
+(use-package cmake-font-lock
+  :commands cmake-font-lock-activate
+  :hook (cmake-mode . cmake-font-lock-activate))
+
+
 (use-package company-c-headers
   :commands company-c-headers
   :config
@@ -12,14 +17,15 @@
 
 
 (use-package helm-rtags
-  :after helm)
+  :after helm rtags)
+
 
 (use-package company-rtags
   :after company rtags)
 
 
 (use-package flycheck-rtags
-  :after flycheck rtags cc-mode)
+  :after flycheck rtags)
 
 
 (use-package rtags
@@ -33,12 +39,10 @@
   :config
   ;;(rtags-enable-standard-keybindings)
   (setq rtags-use-helm t
-	rtags-display-result-backend 'helm
+	rtags-completions-enabled t
 	rtags-autostart-diagnostics t
-	rtags-completions-enabled t)
-  (require 'helm-rtags)
-  (require 'company-rtags)
-  (require 'flycheck-rtags))
+	rtags-display-result-backend 'helm)
+  )
 
 
 (use-package highlight-doxygen)
@@ -47,22 +51,25 @@
 (use-package cc-mode
   :ensure nil
   :hook ((c++-mode c-mode) . (lambda nil
-			       (highlight-doxygen-mode)
 			       (flycheck-mode)
 			       (flycheck-select-checker 'rtags)
-			       (setq-local flycheck-highlighting-mode 'lines
-					   company-backends (seq-filter (lambda (func)
-									  (not
-									   (or (eq func 'company-clang)
-									       (eq func 'company-cmake)
-									       (eq func 'company-gtags))))
-									company-backends))
-			       (add-to-list 'company-backends 'company-rtags)))
+			       (setq-local flycheck-highlighting-mode 'lines)
+			       (highlight-doxygen-mode)
+			       ;; (rtags-start-process-unless-running)
+			       (make-local-variable 'company-backends)
+			       (add-to-list 'company-backends 'company-rtags)
+			       (add-to-list 'company-backends 'company-c-headers)))
   :config
   (require 'rtags)
-  (require 'highlight-doxygen)
-  (make-local-variable 'company-backends)
-  (add-to-list 'company-backends 'company-c-headers))
+  (require 'company-rtags)
+  (require 'flycheck-rtags)
+  (require 'company-c-headers)
+  (require 'highlight-doxygen))
+
+
+(use-package bazel-mode)
+(use-package protobuf-mode
+  :mode "\\.pb\\'")
 
 
 (provide 'init-cpp)

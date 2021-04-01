@@ -97,7 +97,7 @@
 	      (":" . helm-M-x))
   :config
   ;; or add to evil-emacs-state-modes, and remove from evil-motion-state-modes
-  (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode))
+  (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode rtags-mode))
     (evil-set-initial-state mode 'emacs)))
 
 (use-package sr-speedbar
@@ -117,11 +117,6 @@
   :init
   (desktop-save-mode 1)
   (setq desktop-dirname (expand-file-name "data/desktop" emacsroot)))
-
-
-(use-package cmake-font-lock
-  :commands cmake-font-lock-activate
-  :hook (cmake-mode . cmake-font-lock-activate))
 
 
 ;; compress file reading
@@ -144,8 +139,6 @@
 (use-package hexo
   :init
   (add-hook 'hexo-mode-hook 'evil-local-mode))
-
-(use-package bazel-mode)
 
 
 (use-package google-translate
@@ -179,34 +172,7 @@
 (use-package hl-line-mode
   :ensure nil
   :init
-  (global-hl-line-mode)
-  ;;(set-face-background hl-line-face "gray13")
-  )
-
-(use-package protobuf-mode
-  :mode "\\.pb\\'")
-
-
-(use-package projectile
-  :commands projectile-global-mode
-  :init (projectile-global-mode)
-  :bind (:map projectile-mode-map
-	      ("C-c p" . 'projectile-command-map))
-  :config
-  (require 'helm-projectile)
-  (setq projectile-globally-ignored-file-suffixes '(".bz2" ".log" ".rpm"))
-  (setq projectile-completion-system 'helm))
-
-
-(use-package helm-projectile
-  :after projectile helm
-  :config
-  (setq grep-find-ignored-directories
-	(append grep-find-ignored-directories '("bazel-ant1" 
-  "bazel-testlogs" "aliws_updater" "platform_bot_data" "dingding_bot/data" "aliws"
-  "ye_wu_zhi_da/model" "debug_data"))
-	grep-find-ignored-files (append grep-find-ignored-files '("*.db" "*.tar" "*.tgz")))
-  (helm-projectile-on))
+  (global-hl-line-mode))
 
 
 (use-package man
@@ -215,14 +181,17 @@
 			(set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
 			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")))))
 
+
 (prefer-coding-system 'utf-8)
 (define-coding-system-alias 'utf8 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
+
 
 (use-package imenu
   :commands imenu
   :config
   (setq imenu-sort-function 'imenu--sort-by-name))
+
 
 (xterm-mouse-mode)
 

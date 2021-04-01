@@ -6,8 +6,11 @@
 	 ("M-y" . helm-show-kill-ring)
 	 ("C-x C-f" . helm-find-files)
 	 ("C-c C-j" . helm-semantic-or-imenu) 
-	 ("C-c C-o" . helm-occur)
+	 ("C-c o" . helm-occur)
 	 ("C-c h m" . helm-man-woman)
+	 ("C-h f" . helm-apropos)
+	 ("C-h v" . helm-apropos)
+	 ("C-c p f" . project-find-file)
 	 :map helm-map
 	 ([tab] . helm-execute-persistent-action)
 	 ("C-i" . helm-execute-persistent-action)
@@ -34,6 +37,35 @@
   ;; export MANPATH=`manpath`
   (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
 
+
+(use-package projectile
+  :commands projectile-global-mode
+  :init (projectile-global-mode)
+  :bind (:map projectile-mode-map
+	      ("C-c p" . 'projectile-command-map))
+  :config
+  (require 'helm-projectile)
+  (setq projectile-globally-ignored-file-suffixes '(".bz2" ".log" ".rpm")
+	projectile-completion-system 'helm
+	projectile-enable-caching t))
+
+
+(use-package helm-projectile
+  :after projectile helm
+  :config
+  (setq grep-find-ignored-directories
+	(append grep-find-ignored-directories '("aliws"
+						"aliws_updater"
+						"debug_data"
+						"bazel-ant1"
+						"bazel-testlogs"
+						"platform_bot_data"
+						"dingding_bot/data"
+						"ye_wu_zhi_da/model"))
+	grep-find-ignored-files (append grep-find-ignored-files '("*.db" "*.tar" "*.tgz"))
+	projectile-switch-project-action 'helm-projectile-find-file)
+  (helm-projectile-on))
+
 (use-package helm-ag)
 
-(provide 'init-helm-gtags)
+(provide 'init-helm)
