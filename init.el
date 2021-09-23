@@ -70,3 +70,4 @@
 
 (setq g-cons-threshold (* 20 1000 1000))
 (put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-region 'disabled nil)

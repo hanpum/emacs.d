@@ -186,6 +186,7 @@
 (define-coding-system-alias 'utf8 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
 
+(setq org-confirm-babel-evaluate nil)
 
 (use-package imenu
   :commands imenu
@@ -194,5 +195,8 @@
 
 
 (xterm-mouse-mode)
+
+(use-package gradle-mode)
+(use-package flycheck-gradle)
 
 (provide 'init-misc)
