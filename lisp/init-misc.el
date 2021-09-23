@@ -220,6 +220,11 @@
 (prefer-coding-system 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
 
+(setq org-confirm-babel-evaluate nil)
+
 (xterm-mouse-mode)
+
+(use-package gradle-mode)
+(use-package flycheck-gradle)
 
 (provide 'init-misc)

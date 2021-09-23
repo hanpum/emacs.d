@@ -52,3 +52,4 @@
 					 gcs-done)))
 
 (setq g-cons-threshold (* 20 1000 1000))
+(put 'narrow-to-region 'disabled nil)

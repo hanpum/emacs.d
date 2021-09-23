@@ -17,9 +17,11 @@
   (setf org-highlight-latex-and-related '(latex script entities))
 
   ;; set variables
-  (setq org-agenda-files (list (concat orgroot "/inbox.org")
-			       "~/projects/sds/competive_analysis/competetor.org"
-			       (concat orgroot "/paper.org"))
+  (setq org-agenda-files (list
+			  ;;(concat orgroot "/inbox.org")
+			  "~/projects/ant/csrobot/doc/csrobot.org"
+			  ;;(concat orgroot "/paper.org")
+			  )
 
 	org-ditaa-jar-path (expand-file-name "ditaa0_9.jar" "~/.local/lib")
 	plantuml-jar-path (expand-file-name "plantuml.jar" "~/.local/lib")
