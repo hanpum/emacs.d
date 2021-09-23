@@ -12,3 +12,5 @@ data/org-html-themes
 
 projectile.cache
 projectile-bookmarks.eld
+
+/custom.el

@@ -2,13 +2,11 @@
   "save current buffer and run it(for examples, python/shell scripts)"
   (interactive)
   (let* ((outputBuf "run-output"))
-
     ;; save file if necessary
     (if (or
 	 (not (buffer-file-name))
 	 (buffer-modified-p))
 	(save-buffer))
-
     ;; change file mode and run it
     (setq fname (buffer-file-name))
     (setq command (concat "chmod +x " fname "; " fname))
@@ -218,9 +216,15 @@
 			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")))))
 
 (prefer-coding-system 'utf-8)
+(define-coding-system-alias 'utf8 'utf-8)
 (setq server-socket-dir (concat emacsroot "/server/"))
 
 (setq org-confirm-babel-evaluate nil)
+
+(use-package imenu
+  :commands imenu
+  :config
+  (setq imenu-sort-function 'imenu--sort-by-name))
 
 (xterm-mouse-mode)
 

@@ -15,16 +15,7 @@
   :after helm)
 
 (use-package company-rtags
-  :after company rtags
-  :config
-  (make-local-variable 'company-backends)
-  (setq company-backends (seq-filter (lambda (func)
-				       (not
-					(or (eq func 'company-clang)
-					    (eq func 'company-cmake)
-					    (eq func 'company-gtags))))
-				     company-backends))
-  (add-to-list 'company-backends 'company-rtags))
+  :after company rtags)
 
 
 (use-package flycheck-rtags
@@ -50,14 +41,26 @@
   (require 'flycheck-rtags))
 
 
+(use-package highlight-doxygen)
+
+
 (use-package cc-mode
   :ensure nil
   :hook ((c++-mode c-mode) . (lambda nil
-				(flycheck-mode)
-				(flycheck-select-checker 'rtags)
-				(setq-local flycheck-highlighting-mode 'lines)))
+			       (highlight-doxygen-mode)
+			       (flycheck-mode)
+			       (flycheck-select-checker 'rtags)
+			       (setq-local flycheck-highlighting-mode 'lines
+					   company-backends (seq-filter (lambda (func)
+									  (not
+									   (or (eq func 'company-clang)
+									       (eq func 'company-cmake)
+									       (eq func 'company-gtags))))
+									company-backends))
+			       (add-to-list 'company-backends 'company-rtags)))
   :config
   (require 'rtags)
+  (require 'highlight-doxygen)
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends 'company-c-headers))
 
