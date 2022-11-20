@@ -194,6 +194,9 @@
   (setq imenu-sort-function 'imenu--sort-by-name))
 
 
+(setq-default tab-width 4)
+
+
 (xterm-mouse-mode)
 
 (use-package gradle-mode)

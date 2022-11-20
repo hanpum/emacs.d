@@ -22,12 +22,14 @@
 
 (setq emacsroot "~/.emacs.d")
 
-(setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
-			 ("org" . "https://elpa.emacs-china.org/org/")))
+(setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+
 (require 'package)
 (package-initialize)
 
+;; install use-package if missing
 (dolist (pkg '(use-package))
   (unless (package-installed-p pkg)
     (progn
@@ -69,5 +71,14 @@
 					 gcs-done)))
 
 (setq g-cons-threshold (* 20 1000 1000))
+
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+
+;; customize face while run in GUI
+(when (display-graphic-p)
+  (load-theme 'nova t)
+  (set-default-font "monaco 16" nil t)
+  ;; possible alpha value: (active . inactive) or both
+  (set-frame-parameter nil 'alpha '(96 . 90)))
