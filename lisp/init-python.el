@@ -1,13 +1,4 @@
-(use-package company-jedi
-  :after python
-  :hook (python-mode . jedi:setup)
-  :config
-  (setq
-   jedi:use-shortcuts t
-   jedi:complete-on-dot t
-   jedi:environment-virtualenv (append python-environment-virtualenv '("--python" "/usr/local/bin/python3"))
-   jedi:server-args '("--log-traceback" "--log-level" "DEBUG")
-   jedi:imenu-create-index-function 'jedi:create-flat-imenu-index))
+
 
 ;; configuration for python
 (use-package python

@@ -19,6 +19,7 @@
   ;; (use-package helm-config)
   (helm-autoresize-mode 1)
   (setq helm-scroll-amount 8
+	Man-width-max 120
 	helm-M-x-fuzzy-match t
 	helm-ag-use-agignore t
 	helm-ag-use-grep-ignore-list t
@@ -54,7 +55,9 @@
   :after projectile helm
   :config
   (setq grep-find-ignored-directories
-	(append grep-find-ignored-directories '("aliws"
+	(append grep-find-ignored-directories '("tmp"
+						".tmp"
+						"aliws"
 						"aliws_updater"
 						"debug_data"
 						"bazel-ant1"

@@ -39,6 +39,7 @@
   :config
   ;;(rtags-enable-standard-keybindings)
   (setq rtags-use-helm t
+	rtags-rc-log-enabled t
 	rtags-completions-enabled t
 	rtags-autostart-diagnostics t
 	rtags-display-result-backend 'helm)

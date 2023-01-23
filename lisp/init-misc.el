@@ -1,32 +1,66 @@
-(defun my/run-current-buffer ()
-  "save current buffer and run it(for examples, python/shell scripts)"
-  (interactive)
-  (let* ((outputBuf "run-output"))
-    ;; save file if necessary
-    (if (or
-	 (not (buffer-file-name))
-	 (buffer-modified-p))
-	(save-buffer))
-    ;; change file mode and run it
-    (setq fname (buffer-file-name))
-    (setq command (concat "chmod +x " fname "; " fname))
-    (executable-interpret (read-shell-command "Run: " command))))
+;; using space instead of hard tab
+(setq-default tab-width 4
+              indent-tabs-mode nil
+              shell-file-name "/bin/zsh"
+              help-window-select t  ; always activate help window
+              make-backup-files nil ; don't create backup file
+              select-enable-clipboard t ; enable copy/paste co-work with X-system
+              server-socket-dir (concat emacsroot "/server/"))
 
 
-;; diable auto create backup file
-(setq make-backup-files nil)
+(prefer-coding-system 'utf-8)
+(define-coding-system-alias 'utf8 'utf-8)
 
 
-;; show line number
-(add-hook 'find-file-hook (lambda () (linum-mode 1)))
-(setq linum-format "%-d ")
-(linum-mode 1)
+;; show line number in left and mode line
+(global-linum-mode)
 (line-number-mode)
-(column-number-mode t)
+(column-number-mode)
+(setq-default linum-format "%-d ")
+
+(global-hl-line-mode)
 
 
-;; configuration for shell
-(setq shell-file-name "/bin/zsh")
+(auto-fill-mode t)
+(setq-default fill-column 100)
+
+
+;; key bind
+(global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-c g") 'revert-buffer)
+(global-set-key (kbd "C-c e") 'eval-buffer)
+(global-set-key (kbd "C-A-s") 'isearch-forward)
+
+
+;; customized mode mapping
+(add-to-list 'auto-mode-alist
+             '("\\.grm\\'" . conf-mode))
+
+
+(xterm-mouse-mode)
+
+;; disable menu in terminal
+(if (equal window-system nil)
+    (menu-bar-mode 0))
+
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t) 
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
+
+(set-face-attribute 'default nil :height 140 :family "Monospace")
+
+
+(defun my/run-current-buffer ()
+  "Save current buffer and run it(for examples, python/shell scripts)"
+  (interactive)
+  ;; save file if necessary
+  (if (or (not (buffer-file-name))
+          (buffer-modified-p))
+      (save-buffer))
+  ;; change file mode and run it
+  (setq fname (buffer-file-name))
+  (setq command (concat "chmod +x " fname "; " fname))
+  (executable-interpret (read-shell-command "Run: " command)))
+
 
 ;; load shell enviroment variable
 (use-package exec-path-from-shell
@@ -36,85 +70,57 @@
   (if (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
 
-(auto-fill-mode t)
-(setq fill-column 100)
-
-(global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
-(global-set-key (kbd "C-c g") 'revert-buffer)
-(global-set-key (kbd "C-c e") 'eval-buffer)
-(global-set-key (kbd "C-A-s") 'isearch-forward)
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-A-r") 'isearch-backward)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-x C-b") 'switch-to-buffer)
-
-
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t) 
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
-
-
-;; disable menu in terminal
-(if (equal window-system nil)
-    (menu-bar-mode 0))
-
-
-;; enable copy/paste co-work with X-system
-(setq select-enable-clipboard t)
 
 ;; render color value
 (use-package rainbow-mode
-  :ensure t
+  :demand t
   :init
   (rainbow-mode t))
 
 
-(set-face-attribute 'default nil :height 140 :family "Monospace")
-
-
 ;; mode for edit shell script
 (use-package sh-script
-  :ensure t
   :bind (:map sh-mode-map
-	      ([f5] . 'my/run-current-buffer)))
+              ([f5] . 'my/run-current-buffer)))
 
 
-;; enable highlight-parentheses
 (use-package highlight-parentheses
-  :ensure t
-  :init
+  :demand t
+  :config
   (electric-pair-mode t)
   (global-highlight-parentheses-mode t))
 
 
-
 ;; enable evil model default
 (use-package evil
-  :ensure t
-  :init
-  (setq evil-want-C-i-jump nil)     ;; enable tab in org mode
-  (evil-mode 1)
+  :demand t
+  :init 
+  (setq evil-want-C-i-jump nil)     ; don't using tab for jump list navigation
   :bind (:map evil-motion-state-map
-	      (":" . helm-M-x))
+              (":" . helm-M-x))
   :config
-  ;; or add to evil-emacs-state-modes, and remove from evil-motion-state-modes
+  (evil-mode 1)
+  ;;(define-key evil-motion-state-map "TAB" nil)
+  ;; disable evil for some mode
   (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode rtags-mode))
     (evil-set-initial-state mode 'emacs)))
+
 
 (use-package sr-speedbar
   :bind ("C-c n" . sr-speedbar-toggle)
   :config
-  (setq speedbar-show-unknown-files t
-	c-basic-offset 4))
+  (setq c-basic-offset 4
+        speedbar-show-unknown-files t))
 
 
 ;; setup for session
 (use-package session
-  :ensure t
   :hook (after-init . session-initialize))
 
 
 (use-package desktop
-  :init
+  :demand t
+  :config
   (desktop-save-mode 1)
   (setq desktop-dirname (expand-file-name "data/desktop" emacsroot)))
 
@@ -125,68 +131,55 @@
 
 (use-package picture
   :hook (picture-mode . (lambda nil
-			  (progn
-			    (whitespace-mode t)
-			    (setq indent-tabs-mode nil)))))
+                          (progn
+                            (whitespace-mode t)
+                            (setq indent-tabs-mode nil)))))
 
 
-(use-package yasnippet
-  :init (yas-global-mode 1))
+;; TODO: only using in programming mode
+;; (use-package yasnippet
+;;   :config
+;;   (yas-global-mode 1)
+;;   (use-package yasnippet-snippets))
 
-(use-package yasnippet-snippets)
 
-
-(use-package hexo
-  :init
-  (add-hook 'hexo-mode-hook 'evil-local-mode))
+;; (use-package hexo
+;;   :init
+;;   (add-hook 'hexo-mode-hook 'evil-local-mode))
 
 
 (use-package google-translate
-  :init 
-  (setq google-translate-default-source-language "en"
-	google-translate-default-target-language "zh-CN"
-	google-translate-output-destination nil
-	google-translate-show-phonetic t)
   :bind (("C-c t" . google-translate-at-point)
-	 ("C-c T" . google-translate-query-translate))
+         ("C-c T" . google-translate-query-translate))
   :config 
+  (setq google-translate-default-source-language "en"
+        google-translate-default-target-language "zh-CN"
+        google-translate-output-destination nil
+        google-translate-show-phonetic t)
   (use-package google-translate-default-ui))
 
 
 (use-package srefactor
-  :commands srefactor-refactor-at-point
   :bind (:map c-mode-map
-	      ("M-RET" . srefactor-refactor-at-point)
-	      :map c++-mode-map
-	      ("M-RET" . srefactor-refactor-at-point)))
+              ("M-RET" . srefactor-refactor-at-point)
+              :map c++-mode-map
+              ("M-RET" . srefactor-refactor-at-point)))
+
 
 (use-package markdown-mode)
 
-(add-to-list 'auto-mode-alist
-	     '("\\.grm\\'" . conf-mode))
 
 (use-package flycheck
   :config
   (setq flycheck-display-errors-delay 0.1))
 
-(use-package hl-line-mode
-  :ensure nil
-  :init
-  (global-hl-line-mode))
-
 
 (use-package man
   :hook (Man-mode . (lambda nil
-		      (progn
-			(set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
-			(set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")))))
+                      (progn
+                        (set-face-attribute 'Man-overstrike nil :inherit 'bold :foreground "orange red")
+                        (set-face-attribute 'Man-underline nil :inherit 'underline :foreground "forest green")))))
 
-
-(prefer-coding-system 'utf-8)
-(define-coding-system-alias 'utf8 'utf-8)
-(setq server-socket-dir (concat emacsroot "/server/"))
-
-(setq org-confirm-babel-evaluate nil)
 
 (use-package imenu
   :commands imenu
@@ -194,12 +187,10 @@
   (setq imenu-sort-function 'imenu--sort-by-name))
 
 
-(setq-default tab-width 4)
-
-
-(xterm-mouse-mode)
-
 (use-package gradle-mode)
 (use-package flycheck-gradle)
 
+
 (provide 'init-misc)
+
+;;; init-misc ends
