@@ -4,14 +4,19 @@
 
 
 (use-package org
+  :bind (("\C-ca" . org-agenda)
+         ("\C-cc" . org-capture)
+         ("\C-cb" . org-iswitchb)
+         :map org-mode-map
+         ("\C-cl" . 'org-store-link)
+         ("C-c C-c" . (lambda ()
+                        (interactive)
+                        (org-ctrl-c-ctrl-c)
+                        (org-redisplay-inline-images))))
   :config
+  ;;(require 'org-ref)
   (auto-fill-mode t)
-  (require 'org-ref)
   (add-to-list 'org-export-backends 'md)
-  (define-key org-mode-map (kbd "C-c C-c") (lambda ()
-                                             (interactive)
-                                             (org-ctrl-c-ctrl-c)
-                                             (org-redisplay-inline-images)))
   ;; highlight
   (setf org-highlight-latex-and-related '(latex script entities))
   ;; set variables
@@ -28,13 +33,12 @@
         org-export-async-debug nil
         ;; add todo keywords
         org-todo-keywords '((sequence "TODO" "ONGOING" "NEXT" "SOMEDAY" "WAIT(w@)" "|" "DONE(d@/!)" "CANCEL(c@/!)"))
-
         ;; set tag list 
-        org-tag-alist '((:startgroup . "       type") 
-                        ("@sds" . ?s)
-                        (:endgroup . nil))
+        ;; org-tag-alist '((:startgroup . "       type") 
+        ;;                 ("@sds" . ?s)
+        ;;                 (:endgroup . nil))
         ;; capture
-        org-default-notes-file (concat org-directory "/inbox.org")
+        org-default-notes-file (expand-file-name "/inbox.org" org-directory)
         org-capture-templates
         '(("t" "Task"     entry (file+headline "" "Tasks")   "* TODO %? %t\n %i\n %a")
           ("T" "Tool"     entry (file+headline "" "Tools")   "* TODO %? %t\n %i\n %a")
@@ -43,14 +47,13 @@
           ("p" "Paper"    entry (file+headline "" "Papers")  "* TODO %? %t\n %i\n %a")
           ("c" "Calendar" entry (file+headline "" "Calendars") "* TODO %? %t\n %i\n %a"))
         org-refile-targets '( (nil :level . 1)))
-  (mapcar
-   (lambda (item)
-     (setq-local npath (concat orgroot item))
-     (message npath)
-     ;;(add-to-list 'org-refile-targets '(npath :level . 1))
-     )
-   '("/inbox.org" "/arch/2020/7.org" "/cancel.org"))
-
+  ;; (mapcar
+  ;;  (lambda (item)
+  ;;    (setq-local npath (concat orgroot item))
+  ;;    (message npath)
+  ;;    (add-to-list 'org-refile-targets '(npath :level . 1))
+  ;;    )
+  ;;  '("/inbox.org" "/arch/2020/7.org" "/cancel.org"))
   ;; refine
   ;; org-refile-targets '(
   ;; 		     ( nil :level . 1)
@@ -70,19 +73,13 @@
                                  (dot t)
                                  (emacs-lisp t)))
   ;; the following lines are always need
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-cb" 'org-iswitchb)
-  (global-set-key "\C-cc" 'org-capture)
   ;; shortcut keys
-  (mapcar (lambda (item)
-            (add-to-list 'org-structure-template-alist item t))
-          '(("n" . "note")
-            ("w" . "warning")
-            ("T" . "tip")
-            ("u" . "caution")
-            ("m" . "important"))))
-
+  (dolist (item '(("n" . "note")
+                  ("w" . "warning")
+                  ("T" . "tip")
+                  ("u" . "caution")
+                  ("m" . "important")))
+    (add-to-list 'org-structure-template-alist item t)))
 
 (use-package org-ref
   :init
@@ -91,7 +88,6 @@
         bibtex-completion-additional-search-fields '("keywords" "tags")
         bibtex-completion-pdf-symbol "P"
         bibtex-completion-notes-symbol "N"
-
         org-ref-notes-function (lambda (key)
                                  (let* ((bibtex-completion-bibliography (org-ref-find-bibliography)))
                                    (bibtex-completion-edit-notes

@@ -9,14 +9,18 @@
                (null (ad-get-arg 0))
                (string-equal (ad-get-arg 0) "%s")))
       (let ((deactivate-mar nil))
-        (save-excursion
-          (set-buffer "*Messages*")
+        (with-current-buffer "*Messages*"
           (read-only-mode -1)
           (goto-char (point-max))
           (if (not (bolp))
               (newline))
           (insert (format-time-string "[%F %T.%3N] " (current-time)))
           (read-only-mode 1)))))
+
+(message "initialization begin")
+
+;; using space instead of hard tab
+(setq-default indent-tabs-mode nil)
 
 
 ;; gc config for boost startup
@@ -88,3 +92,5 @@
   (set-default-font "monaco 16" nil t)
   ;; possible alpha value: (active . inactive) or both
   (set-frame-parameter nil 'alpha '(96 . 90)))
+
+(message "initialization done")

@@ -3,35 +3,39 @@
   (helm-mode 1)
   (global-unset-key (kbd "C-x c"))
   :bind (("M-x" . helm-M-x)
-	 ("M-y" . helm-show-kill-ring)
-	 ("C-x C-f" . helm-find-files)
-	 ("C-c C-j" . helm-semantic-or-imenu) 
-	 ("C-c o" . helm-occur)
-	 ("C-c h m" . helm-man-woman)
-	 ("C-h f" . helm-apropos)
-	 ("C-h v" . helm-apropos)
-	 ("C-c p f" . project-find-file)
-	 :map helm-map
-	 ([tab] . helm-execute-persistent-action)
-	 ("C-i" . helm-execute-persistent-action)
-	 ("C-z" . helm-select-action))
+         ("M-y" . helm-show-kill-ring)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x C-f" . helm-find-files)
+         ("C-c C-j" . helm-semantic-or-imenu) 
+         ("C-c o" . helm-occur)
+         ("C-c h m" . helm-man-woman)
+         ("C-h f" . helm-apropos)
+         ("C-h v" . helm-apropos)
+         ("C-c p f" . project-find-file)
+         :map helm-map
+         ([tab] . helm-execute-persistent-action)
+         ("C-i" . helm-execute-persistent-action)
+         ("C-z" . helm-select-action))
   :config
   ;; (use-package helm-config)
   (helm-autoresize-mode 1)
   (setq helm-scroll-amount 8
-	Man-width-max 120
-	helm-M-x-fuzzy-match t
-	helm-ag-use-agignore t
-	helm-ag-use-grep-ignore-list t
-	helm-ag-insert-at-point 'symbol
-	helm-autoresize-max-height 0
-	helm-autoresize-min-height 20
-	helm-split-window-in-side-p t
-	helm-buffers-fuzzy-matching nil
-	helm-ff-search-library-in-sexp t
-	helm-echo-input-in-header-line t
-	helm-move-to-line-cycle-in-source t
-	helm-ff-file-name-history-use-recentf t)
+        Man-width-max 120
+        helm-M-x-fuzzy-match t
+        helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t 
+        ;; helm-candidate-number-limit 30
+        helm-buffers-fuzzy-matching nil
+        helm-ag-use-agignore t
+        helm-ag-use-grep-ignore-list t
+        helm-ag-insert-at-point 'symbol
+        helm-autoresize-max-height 0
+        helm-autoresize-min-height 30
+        helm-split-window-in-side-p t
+        helm-ff-search-library-in-sexp t
+        helm-echo-input-in-header-line t
+        helm-move-to-line-cycle-in-source t
+        helm-ff-file-name-history-use-recentf t)
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
   ;; set MANPATH in shell script with
@@ -40,15 +44,14 @@
 
 
 (use-package projectile
-  :commands projectile-global-mode
-  :init (projectile-global-mode)
+  :demand t
   :bind (:map projectile-mode-map
-	      ("C-c p" . 'projectile-command-map))
+              ("C-c p" . 'projectile-command-map))
   :config
   (require 'helm-projectile)
-  (setq projectile-globally-ignored-file-suffixes '(".bz2" ".log" ".rpm")
-	projectile-completion-system 'helm
-	projectile-enable-caching t))
+  (setq projectile-enable-caching t
+        projectile-completion-system 'helm
+        projectile-globally-ignored-file-suffixes '(".bz2" ".log" ".rpm")))
 
 
 (use-package helm-projectile

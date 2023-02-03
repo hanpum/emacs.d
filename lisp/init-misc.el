@@ -1,10 +1,13 @@
 ;; using space instead of hard tab
+;;(global-set-key (kbd "C-c ,") 'pop-global-mark)
+
 (setq-default tab-width 4
               indent-tabs-mode nil
               shell-file-name "/bin/zsh"
-              help-window-select t  ; always activate help window
+              help-window-select t ; always activate help window
               make-backup-files nil ; don't create backup file
               select-enable-clipboard t ; enable copy/paste co-work with X-system
+              shell-command-prompt-show-cwd t ; show cwd while running shell command
               server-socket-dir (concat emacsroot "/server/"))
 
 
@@ -21,8 +24,8 @@
 (global-hl-line-mode)
 
 
-(auto-fill-mode t)
-(setq-default fill-column 100)
+(auto-fill-mode)
+(setq-default fill-column 80)
 
 
 ;; key bind
@@ -102,7 +105,7 @@
   (evil-mode 1)
   ;;(define-key evil-motion-state-map "TAB" nil)
   ;; disable evil for some mode
-  (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode rtags-mode))
+  (dolist (mode '(Info-mode profiler-report-mode term-mode geiser-repl-mode rtags-mode helm-occur-mode))
     (evil-set-initial-state mode 'emacs)))
 
 
