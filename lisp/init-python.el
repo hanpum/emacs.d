@@ -20,7 +20,8 @@
   :config
   (jedi:setup)
   (require 'python-black)
-  (setq python-shell-interpreter "python3"))
+  (setq python-shell-interpreter "python3"
+        jedi:server-args '("--pdb")))
 
 (use-package python-black
   :after python

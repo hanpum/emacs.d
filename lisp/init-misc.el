@@ -60,18 +60,9 @@
           (buffer-modified-p))
       (save-buffer))
   ;; change file mode and run it
-  (setq fname (buffer-file-name))
-  (setq command (concat "chmod +x " fname "; " fname))
-  (executable-interpret (read-shell-command "Run: " command)))
-
-
-;; load shell enviroment variable
-(use-package exec-path-from-shell
-  :demand t
-  :config
-  (setq exec-path-from-shell-check-startup-files nil)
-  (if (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
+  (let* ((fname (buffer-file-name))
+         (command (concat "chmod +x " fname "; " fname)))
+    (executable-interpret command)))
 
 
 ;; render color value
